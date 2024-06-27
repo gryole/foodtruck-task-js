@@ -1,0 +1,32 @@
+{
+  "name": "foodtruck-task-js-backend",
+  "version": "1.0.0",
+  "dependencies": {
+    "cross-env": "5.0.5",
+    "csv": "^6.3.9",
+    "express": "^4.19.2"
+  },
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn clean && tsc && yarn copy-files",
+    "start": "ts-node src/index.ts",
+    "serve": "node dist/index.js",
+    "clean": "shx rm -rf ./dist",
+    "test": "jest",
+    "copy-files": "shx cp -r ./src/data ./dist/data"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.9",
+    "chai": "^5.1.1",
+    "jest": "^29.7.0",
+    "mocha": "^10.5.2",
+    "shx": "^0.3.4",
+    "simon": "^0.2.3",
+    "ts-jest": "^29.1.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.2"
+  }
+}

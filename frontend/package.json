@@ -1,0 +1,9 @@
+{
+  "name": "foodtruck-task-js-frontend",
+  "version": "1.0.0",
+
+  "dependencies": {
+    "cross-env": "5.0.5",
+    "foodtruck-task-js-backend": "1.0.0"
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "private": true,
+  "workspaces": ["foodtruck-task-js-backend", "foodtruck-task-js-frontend"]
+}
