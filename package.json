@@ -1,4 +1,15 @@
 {
   "private": true,
-  "workspaces": ["foodtruck-task-js-backend", "foodtruck-task-js-frontend"]
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "start:frontend": "yarn workspace frontend start",
+    "start:backend": "yarn workspace backend start",
+    "start": "concurrently \"yarn start:frontend\" \"yarn start:backend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
 }

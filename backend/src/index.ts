@@ -7,7 +7,7 @@ import {searchByParams} from "./service/SearchService";
 import {FoodTruck} from "./model/FoodTruck";
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 const foodTruckDataFile = `./src/data/Mobile_Food_Facility_Permit.csv`;
 let parsedData: FoodTruck[] = [];
 loadData(foodTruckDataFile)
@@ -18,17 +18,17 @@ app.get('/', (req, res) => {
     res.send('Hello, TypeScript with Express!');
 });
 
-app.get('/foodtrucks', (req, res) => {
+app.get('/api/foodtrucks', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(parsedData));
 });
-app.get('/foodtrucks/foodItems', (req, res) => {
+app.get('/api/foodtrucks/foodItems', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify([...new Set(parsedData.flatMap(value => value.foodItems ? [...value.foodItems] : []))].sort()));
 });
 
 
-app.get('/foodtrucks/search', (req, res) => {
+app.get('/api/foodtrucks/search', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(searchByParams(parsedData, parseParametersForSearch(req))));
 });
