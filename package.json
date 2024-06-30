@@ -7,7 +7,9 @@
   "scripts": {
     "start:frontend": "yarn workspace foodtruck-task-js-frontend start",
     "start:backend": "yarn workspace foodtruck-task-js-backend start",
-    "start": "concurrently \"yarn start:frontend\" \"yarn start:backend\""
+    "start": "concurrently \"yarn start:frontend\" \"yarn start:backend\"",
+    "serve_win": "yarn workspace foodtruck-task-js-frontend build && yarn workspace foodtruck-task-js-backend serve_win",
+    "serve_nix": "yarn workspace foodtruck-task-js-frontend build && yarn workspace foodtruck-task-js-backend serve_nix"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

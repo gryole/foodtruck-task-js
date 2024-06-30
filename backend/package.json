@@ -9,9 +9,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "yarn clean && tsc && yarn copy-files",
+    "build": "yarn run test && yarn clean && tsc && yarn copy-files",
     "start": "ts-node src/index.ts",
-    "serve": "node dist/index.js",
+    "serve_win": "yarn run build && set NODE_ENV=production && node dist/index.js",
+    "serve_nix": "yarn run build && NODE_ENV=production node dist/index.js",
     "clean": "shx rm -rf ./dist",
     "test": "jest",
     "copy-files": "shx cp -r ./src/data ./dist/data"

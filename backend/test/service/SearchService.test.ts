@@ -18,17 +18,17 @@ test('should search by applicant', async () => {
 
 test('should search by food items', async () => {
     let actual = searchByParams([
-        {foodItems: new Set(['itemA', 'itemB'])},
-        {foodItems: new Set(['itemA', 'itemC', ' '])},
-        {foodItems: new Set(['itemC', 'itemD', ' '])},
+        {foodItems: ['itemA', 'itemB']},
+        {foodItems: ['itemA', 'itemC', ' ']},
+        {foodItems: ['itemC', 'itemD', ' ']},
         {foodItems: undefined},
-        {foodItems: new Set()},
+        {foodItems: []},
     ], {
         foodItems: ['itemC'], radiusKm: 1
     });
 
-    expect(actual).toContainEqual({foodItems: new Set(['itemA', 'itemC', ' '])});
-    expect(actual).toContainEqual({foodItems: new Set(['itemA', 'itemC', ' '])});
+    expect(actual).toContainEqual({foodItems: ['itemA', 'itemC', ' ']});
+    expect(actual).toContainEqual({foodItems: ['itemA', 'itemC', ' ']});
 })
 
 
