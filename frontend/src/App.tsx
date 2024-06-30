@@ -12,9 +12,9 @@ const App: React.FC = () => {
     const [foodItems, setFoodItems] = useState([] as SelectProps['options']);
     const [searchFoodItems, setSearchFoodItems] = useState([] as string | string[]);
     const [searchTruckName, setSearchTruckName] = useState("");
-    const [searchLatitude, setSearchLatitude] = useState(37.74530);
-    const [searchLongitude, setSearchLongitude] = useState(-122.40342);
-    const [searchRadius, setSearchRadius] = useState(0.2);
+    const [searchLatitude, setSearchLatitude] = useState('37.74530');
+    const [searchLongitude, setSearchLongitude] = useState('-122.40342');
+    const [searchRadius, setSearchRadius] = useState('0.2');
     const [foundFoodTrucks, setFoundFoodTrucks] = useState([] as FoodTruck[]);
 
     const fetchFoodItems = async () => {

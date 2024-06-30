@@ -3,8 +3,8 @@ import {Input} from 'antd';
 
 interface NumericInputProps {
     style: React.CSSProperties;
-    value: number;
-    onChange: (value: number) => void;
+    value: string;
+    onChange: (value: string) => void;
     placeholder: string
 }
 
@@ -15,11 +15,7 @@ const NumericInput = (props: NumericInputProps) => {
         const {value: inputValue} = e.target;
         const reg = /^-?\d*(\.\d*)?$/;
         if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
-            let parsed = parseFloat(inputValue);
-            if (isNaN(parsed)) {
-                parsed = 0;
-            }
-            onChange(parsed);
+            onChange(inputValue);
         }
     };
 
@@ -30,7 +26,7 @@ const NumericInput = (props: NumericInputProps) => {
         if (strValue.charAt(strValue.length - 1) === '.' || strValue === '-') {
             valueTemp = strValue.slice(0, -1);
         }
-        onChange(parseFloat(valueTemp.replace(/0*(\d+)/, '$1')));
+        onChange(valueTemp.replace(/0*(\d+)/, '$1'));
     };
 
     return (
