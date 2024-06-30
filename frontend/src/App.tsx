@@ -9,10 +9,13 @@ const style: React.CSSProperties = {padding: '8px 0'};
 const App: React.FC = () => {
     const {token: {colorBgContainer, borderRadiusLG}} = theme.useToken();
     const [foodItems, setFoodItems] = useState([] as SelectProps['options']);
+    const [searchFoodItems, setSearchFoodItems] = useState([] as string | string[]);
     const [searchTruckName, setSearchTruckName] = useState("");
     const [searchLatitude, setSearchLatitude] = useState(37.74530);
     const [searchLongitude, setSearchLongitude] = useState(-122.40342);
     const [searchRadius, setSearchRadius] = useState(0.2);
+    //TODO
+    // const [foundFoodTrucks, setFoundFoodTrucks] = useState([] as FoodTruck);
 
     const fetchFoodItems = async () => {
         const response = await fetch("/api/foodtrucks/foodItems");
@@ -29,6 +32,43 @@ const App: React.FC = () => {
     useEffect(() => {
         fetchFoodItems();
     }, []);
+    useEffect(() => {
+        let ignore = false;
+        async function fetchFoodTrucks() {
+            const urlSearchParams = new URLSearchParams();
+            if (searchFoodItems !== undefined) {
+                if (typeof searchFoodItems === 'string') {
+                    urlSearchParams.append('foodItems', searchFoodItems);
+                }
+                if (Array.isArray(searchFoodItems)) {
+                    searchFoodItems.forEach(value => urlSearchParams.append('foodItems', value as string));
+                }
+            }
+            if (searchTruckName !== undefined) {
+                urlSearchParams.append('applicant', searchTruckName);
+            }
+            if (searchLatitude !== undefined) {
+                urlSearchParams.append('latitude', '' + searchLatitude);
+            }
+            if (searchLongitude !== undefined) {
+                urlSearchParams.append('longitude', '' + searchLongitude);
+            }
+            if (searchRadius !== undefined) {
+                urlSearchParams.append('radius', '' + searchRadius);
+            }
+            const response = await fetch("/api/foodtrucks/foodItems?" + urlSearchParams);
+            const json = await response.json();
+            if (!ignore) {
+                //TODO
+                // set
+            }
+        }
+        fetchFoodTrucks()
+        return () => {
+            ignore = true;
+        };
+    }, [searchFoodItems, searchTruckName, searchLatitude, searchLongitude, searchRadius]);
+
 
     return (
         <Layout>
@@ -61,6 +101,7 @@ const App: React.FC = () => {
                                     placeholder="Please select"
                                     style={{width: '100%'}}
                                     options={foodItems}
+                                    onChange={setSearchFoodItems}
                                 />
                             </div>
                         </Col>
