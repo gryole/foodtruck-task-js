@@ -1,16 +1,31 @@
-import React from 'react';
-import {Col, Input, Layout, Row, Select, theme} from 'antd';
-import {UserOutlined} from '@ant-design/icons';
+import React, {useEffect, useState} from 'react';
+import {Col, Input, Layout, Row, Select, SelectProps, theme} from 'antd';
 import NumericInput from "./components/NumericInput";
 
 const {Header, Content, Footer} = Layout;
-
 const style: React.CSSProperties = {padding: '8px 0'};
 
+
 const App: React.FC = () => {
-    const {
-        token: {colorBgContainer, borderRadiusLG},
-    } = theme.useToken();
+    const {token: {colorBgContainer, borderRadiusLG}} = theme.useToken();
+    const [searchTruckName, setSearchTruckName] = useState("");
+    const [foodItems, setFoodItems] = useState([] as SelectProps['options']);
+
+    const fetchFoodItems = async () => {
+        const response = await fetch("/api/foodtrucks/foodItems");
+        const result: string[] = await response.json();
+        const options: SelectProps['options'] = [];
+        result.forEach(item => {
+            options.push({
+                value: item,
+                label: item,
+            })
+        })
+        setFoodItems(options);
+    }
+    useEffect(() => {
+        fetchFoodItems();
+    }, []);
 
     return (
         <Layout>
@@ -29,7 +44,8 @@ const App: React.FC = () => {
                         <Col className="gutter-row" xs={24} xl={6}>
                             <div style={style}>
                                 <h5>Food truck name</h5>
-                                <Input size="large" prefix={<UserOutlined/>}/>
+                                <Input size="large" value={searchTruckName}
+                                       onChange={(e) => setSearchTruckName(e.target.value)}/>
                             </div>
                         </Col>
                         <Col className="gutter-row" xs={24} xl={6}>
@@ -39,8 +55,8 @@ const App: React.FC = () => {
                                     mode="tags"
                                     size="large"
                                     placeholder="Please select"
-                                    defaultValue={['a10', 'c12']}
                                     style={{width: '100%'}}
+                                    options={foodItems}
                                 />
                             </div>
                         </Col>
