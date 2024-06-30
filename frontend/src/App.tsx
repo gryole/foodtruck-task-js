@@ -139,7 +139,7 @@ const App: React.FC = () => {
                                     title={item.applicant}
                                     description={
                                         <a href={`https://www.google.com/maps?q=${item.latitude},${item.longitude}`}
-                                           target='_blank'>{item.address}</a>
+                                           target='_blank' rel='noopener noreferrer'>{item.address}</a>
                                     }
                                 />
                                 {item.foodItems && item.foodItems.join(", ")}
