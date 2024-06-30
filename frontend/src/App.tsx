@@ -8,8 +8,11 @@ const style: React.CSSProperties = {padding: '8px 0'};
 
 const App: React.FC = () => {
     const {token: {colorBgContainer, borderRadiusLG}} = theme.useToken();
-    const [searchTruckName, setSearchTruckName] = useState("");
     const [foodItems, setFoodItems] = useState([] as SelectProps['options']);
+    const [searchTruckName, setSearchTruckName] = useState("");
+    const [searchLatitude, setSearchLatitude] = useState(37.74530);
+    const [searchLongitude, setSearchLongitude] = useState(-122.40342);
+    const [searchRadius, setSearchRadius] = useState(0.2);
 
     const fetchFoodItems = async () => {
         const response = await fetch("/api/foodtrucks/foodItems");
@@ -40,6 +43,7 @@ const App: React.FC = () => {
                     padding: 24,
                     borderRadius: borderRadiusLG,
                 }}>
+                    <h2>Search for the best street food</h2>
                     <Row gutter={{xs: 8, sm: 16, md: 24, lg: 32}}>
                         <Col className="gutter-row" xs={24} xl={6}>
                             <div style={style}>
@@ -65,12 +69,13 @@ const App: React.FC = () => {
                                 <h5>Your location</h5>
                                 <Row gutter={{xs: 8, sm: 16, md: 24, lg: 32}}>
                                     <Col span={12}>
-                                        <NumericInput value="12" onChange={() => {
-                                        }} style={{width: '100%'}} placeholder="Latitude"></NumericInput>
+                                        <NumericInput value={searchLatitude} onChange={setSearchLatitude}
+                                                      style={{width: '100%'}}
+                                                      placeholder="Latitude"></NumericInput>
                                     </Col>
                                     <Col span={12}>
-                                        <NumericInput value="12" onChange={() => {
-                                        }} style={{}} placeholder="Longitude"></NumericInput>
+                                        <NumericInput value={searchLongitude} onChange={setSearchLongitude} style={{}}
+                                                      placeholder="Longitude"></NumericInput>
                                     </Col>
                                 </Row>
                             </div>
@@ -78,11 +83,12 @@ const App: React.FC = () => {
                         <Col className="gutter-row" xs={24} xl={6}>
                             <div style={style}>
                                 <h5>Search radius, km</h5>
-                                <NumericInput value="5" onChange={() => {
-                                }} style={{}} placeholder="Search radius"></NumericInput>
+                                <NumericInput value={searchRadius} onChange={setSearchRadius} style={{}}
+                                              placeholder="Search radius"></NumericInput>
                             </div>
                         </Col>
                     </Row>
+                    <h2>Search results:</h2>
                 </div>
             </Content>
             <Footer style={{textAlign: 'center'}}>
