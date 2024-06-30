@@ -5,8 +5,8 @@
     "backend"
   ],
   "scripts": {
-    "start:frontend": "yarn workspace frontend start",
-    "start:backend": "yarn workspace backend start",
+    "start:frontend": "yarn workspace foodtruck-task-js-frontend start",
+    "start:backend": "yarn workspace foodtruck-task-js-backend start",
     "start": "concurrently \"yarn start:frontend\" \"yarn start:backend\""
   },
   "devDependencies": {

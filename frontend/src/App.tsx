@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Col, Input, Layout, Row, Select, SelectProps, theme} from 'antd';
-import NumericInput from "./components/NumericInput";
+import NumericInput from './components/NumericInput';
+import {FoodTruck} from "./model/FoodTruck";
 
 const {Header, Content, Footer} = Layout;
 const style: React.CSSProperties = {padding: '8px 0'};
@@ -14,8 +15,7 @@ const App: React.FC = () => {
     const [searchLatitude, setSearchLatitude] = useState(37.74530);
     const [searchLongitude, setSearchLongitude] = useState(-122.40342);
     const [searchRadius, setSearchRadius] = useState(0.2);
-    //TODO
-    // const [foundFoodTrucks, setFoundFoodTrucks] = useState([] as FoodTruck);
+    const [foundFoodTrucks, setFoundFoodTrucks] = useState([] as FoodTruck);
 
     const fetchFoodItems = async () => {
         const response = await fetch("/api/foodtrucks/foodItems");
@@ -56,11 +56,10 @@ const App: React.FC = () => {
             if (searchRadius !== undefined) {
                 urlSearchParams.append('radius', '' + searchRadius);
             }
-            const response = await fetch("/api/foodtrucks/foodItems?" + urlSearchParams);
+            const response = await fetch("/api/foodtrucks/search?" + urlSearchParams);
             const json = await response.json();
             if (!ignore) {
-                //TODO
-                // set
+                setFoundFoodTrucks(json);
             }
         }
         fetchFoodTrucks()
@@ -134,6 +133,9 @@ const App: React.FC = () => {
             </Content>
             <Footer style={{textAlign: 'center'}}>
                 Food Truck Inc ©{new Date().getFullYear()}
+                <div>
+                    {foundFoodTrucks + ''}
+                </div>
             </Footer>
         </Layout>
     );
