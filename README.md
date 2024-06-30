@@ -8,8 +8,6 @@ Run application locally on port `5000`:
 yarn start
 ```
 
-Use can use postman collection `postman/FoodTruck.json` to test API
-
 # About the project
 
 Application contains .csv file with open food truck data.
