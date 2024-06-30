@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Col, Input, Layout, Row, Select, SelectProps, theme} from 'antd';
+import {Col, Input, Layout, List, Row, Select, SelectProps, theme} from 'antd';
 import NumericInput from './components/NumericInput';
 import {FoodTruck} from "./model/FoodTruck";
 
@@ -15,7 +15,7 @@ const App: React.FC = () => {
     const [searchLatitude, setSearchLatitude] = useState(37.74530);
     const [searchLongitude, setSearchLongitude] = useState(-122.40342);
     const [searchRadius, setSearchRadius] = useState(0.2);
-    const [foundFoodTrucks, setFoundFoodTrucks] = useState([] as FoodTruck);
+    const [foundFoodTrucks, setFoundFoodTrucks] = useState([] as FoodTruck[]);
 
     const fetchFoodItems = async () => {
         const response = await fetch("/api/foodtrucks/foodItems");
@@ -44,7 +44,7 @@ const App: React.FC = () => {
                     searchFoodItems.forEach(value => urlSearchParams.append('foodItems', value as string));
                 }
             }
-            if (searchTruckName !== undefined) {
+            if (searchTruckName !== undefined && searchTruckName !== '') {
                 urlSearchParams.append('applicant', searchTruckName);
             }
             if (searchLatitude !== undefined) {
@@ -54,7 +54,7 @@ const App: React.FC = () => {
                 urlSearchParams.append('longitude', '' + searchLongitude);
             }
             if (searchRadius !== undefined) {
-                urlSearchParams.append('radius', '' + searchRadius);
+                urlSearchParams.append('radiusKm', '' + searchRadius);
             }
             const response = await fetch("/api/foodtrucks/search?" + urlSearchParams);
             const json = await response.json();
@@ -129,13 +129,27 @@ const App: React.FC = () => {
                         </Col>
                     </Row>
                     <h2>Search results:</h2>
+                    <List
+                        itemLayout="vertical"
+                        size="large"
+                        dataSource={foundFoodTrucks}
+                        renderItem={(item) => (
+                            <List.Item key={item.locationId}>
+                                <List.Item.Meta
+                                    title={item.applicant}
+                                    description={
+                                        <a href={`https://www.google.com/maps?q=${item.latitude},${item.longitude}`}
+                                           target='_blank'>{item.address}</a>
+                                    }
+                                />
+                                {item.foodItems && item.foodItems.join(", ")}
+                            </List.Item>
+                        )}
+                    />
                 </div>
             </Content>
             <Footer style={{textAlign: 'center'}}>
                 Food Truck Inc ©{new Date().getFullYear()}
-                <div>
-                    {foundFoodTrucks + ''}
-                </div>
             </Footer>
         </Layout>
     );

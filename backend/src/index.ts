@@ -24,7 +24,7 @@ app.get('/api/foodtrucks', (req, res) => {
 });
 app.get('/api/foodtrucks/foodItems', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify([...new Set(parsedData.flatMap(value => value.foodItems ? [...value.foodItems] : []))].sort()));
+    res.send(JSON.stringify([...new Set(parsedData.flatMap(value => value.foodItems ? value.foodItems : []))].sort()));
 });
 
 

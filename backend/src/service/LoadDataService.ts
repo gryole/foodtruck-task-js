@@ -39,12 +39,13 @@ export async function loadData(filePath: string) {
     return parsedData;
 }
 
-function parseFoodItems(value: string): Set<string> {
+function parseFoodItems(value: string) {
     if (value.trim() === "") {
-        return new Set();
+        return [];
     }
     const foodItems = value.split(":");
-    return new Set(foodItems.map(item => item.trim()).filter(item => item.length > 0));
+    const set = new Set(foodItems.map(item => item.trim()).filter(item => item.length > 0));
+    return Array.from(set);
 }
 
 

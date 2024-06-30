@@ -15,32 +15,33 @@ export function searchByParams(parsedData: FoodTruck[], searchParams: {
         .filter(foodTruck => searchNearest(searchParams.latitude, searchParams.longitude, searchParams.radiusKm, foodTruck));
 }
 
-function searchByApplicant(applicant: string | undefined, foodTruck: FoodTruck) {
-    if (!applicant) {
+function searchByApplicant(searchApplicant: string | undefined, foodTruck: FoodTruck) {
+    if (!searchApplicant) {
         return true;
     }
     return foodTruck.applicant
-        && foodTruck.applicant.toLowerCase().includes(applicant.toLowerCase());
+        && foodTruck.applicant.toLowerCase().includes(searchApplicant.toLowerCase());
 }
 
-function searchByFoodItems(foodItems: undefined | string[], foodTruck: FoodTruck) {
-    if (!foodItems) {
+function searchByFoodItems(searchFoodItems: undefined | string[], foodTruck: FoodTruck) {
+    if (!searchFoodItems) {
         return true;
     }
-    return foodTruck.foodItems && foodItems.every(item => foodTruck.foodItems?.has(item));
+    const set = new Set(foodTruck.foodItems);
+    return foodTruck.foodItems && searchFoodItems.every(item => set.has(item));
 }
 
-function searchNearest(latitude: undefined | number,
-                       longitude: undefined | number,
-                       radiusKm: number,
+function searchNearest(searchLatitude: undefined | number,
+                       searchLongitude: undefined | number,
+                       searchRadiusKm: number,
                        foodTruck: FoodTruck) {
-    if (!latitude || !longitude) {
+    if (!searchLatitude || !searchLongitude) {
         return true;
     }
-    return foodTruck.latitude
-        && foodTruck.longitude
-        && calculateDistance(foodTruck.latitude, foodTruck.longitude, latitude, longitude)
-        <= radiusKm;
+    return foodTruck.latitude !== undefined
+        && foodTruck.longitude !== undefined
+        && (calculateDistance(foodTruck.latitude, foodTruck.longitude, searchLatitude, searchLongitude)
+            <= searchRadiusKm);
 }
 
 /**

@@ -15,7 +15,11 @@ const NumericInput = (props: NumericInputProps) => {
         const {value: inputValue} = e.target;
         const reg = /^-?\d*(\.\d*)?$/;
         if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
-            onChange(parseFloat(inputValue));
+            let parsed = parseFloat(inputValue);
+            if (isNaN(parsed)) {
+                parsed = 0;
+            }
+            onChange(parsed);
         }
     };
 

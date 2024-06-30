@@ -5,7 +5,7 @@ export class FoodTruck {
                 public locationDescription?: string,
                 public address?: string,
                 public status?: string,
-                public foodItems?: Set<string>,
+                public foodItems?: string[],
                 public latitude?: number,
                 public longitude?: number,
                 public schedule?: string,
